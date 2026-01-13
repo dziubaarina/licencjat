@@ -8,6 +8,13 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
 }
 
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = true
+}
 
 group = "com.licencjat"
 version = "0.0.1-SNAPSHOT"
