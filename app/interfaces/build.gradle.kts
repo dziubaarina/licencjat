@@ -8,6 +8,14 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
 }
 
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = true
+}
+
 group = "com.licencjat"
 version = "0.0.1-SNAPSHOT"
 description = "licencjat"
@@ -26,6 +34,7 @@ dependencies {
     implementation(project(":app:ports-input"))
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

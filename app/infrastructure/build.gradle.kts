@@ -8,6 +8,13 @@ plugins {
     kotlin("plugin.spring") version "1.9.25"
 }
 
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = true
+}
 
 group = "com.licencjat"
 version = "0.0.1-SNAPSHOT"
@@ -27,9 +34,12 @@ dependencies {
     implementation(project(":app:ports-output"))
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.liquibase:liquibase-core")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    runtimeOnly("org.postgresql:postgresql")
 }
 
 kotlin {
