@@ -11,3 +11,4 @@ include(
 )
 
 include("app")
+include("app:domain")

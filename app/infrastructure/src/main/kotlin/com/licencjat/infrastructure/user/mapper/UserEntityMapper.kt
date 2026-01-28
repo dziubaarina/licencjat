@@ -1,14 +1,14 @@
 package com.licencjat.infrastructure.user.mapper
 
+import com.licencjat.domain.model.User
 import com.licencjat.infrastructure.user.entity.UserEntity
-import com.licencjat.ports.output.user.UserDomain
 import org.springframework.stereotype.Component
 
 @Component
 class UserEntityMapper {
 
-    fun toDomain(entity: UserEntity): UserDomain {
-        return UserDomain(
+    fun toDomain(entity: UserEntity): User {
+        return User(
             id = entity.id,
             firstName = entity.firstName,
             lastName = entity.lastName,
@@ -20,7 +20,7 @@ class UserEntityMapper {
         )
     }
 
-    fun toEntity(domain: UserDomain): UserEntity {
+    fun toEntity(domain: User): UserEntity {
         return UserEntity(
             id = domain.id,
             firstName = domain.firstName,

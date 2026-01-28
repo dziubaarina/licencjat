@@ -6,6 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.jpa") version "1.9.22"
 }
 
 tasks.bootJar {
@@ -32,6 +33,7 @@ repositories {
 
 dependencies {
     implementation(project(":app:ports-output"))
+    implementation(project(":app:domain"))
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.liquibase:liquibase-core")

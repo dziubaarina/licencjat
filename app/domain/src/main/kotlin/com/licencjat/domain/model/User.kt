@@ -1,6 +1,6 @@
-package com.licencjat.ports.output.user
+package com.licencjat.domain.model
 
-data class UserDomain(
+data class User(
     val id: Long? = null,
     val firstName: String,
     val lastName: String,
