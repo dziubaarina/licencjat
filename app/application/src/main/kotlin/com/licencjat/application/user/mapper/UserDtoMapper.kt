@@ -1,15 +1,15 @@
 package com.licencjat.application.user.mapper
 
-import com.licencjat.ports.input.user.dto.CreateUserCommand
-import com.licencjat.ports.input.user.dto.UserDto
-import com.licencjat.ports.output.user.UserDomain
+import com.licencjat.domain.model.User
+import com.licencjat.ports.input.user.CreateUserCommand
+import com.licencjat.ports.input.user.dto.UserResponse
 import org.springframework.stereotype.Component
 
 @Component
 class UserDtoMapper {
 
-    fun toDto(domain: UserDomain): UserDto {
-        return UserDto(
+    fun toDto(domain: User): UserResponse {
+        return UserResponse(
             id = domain.id,
             firstName = domain.firstName,
             lastName = domain.lastName,
@@ -18,8 +18,8 @@ class UserDtoMapper {
         )
     }
 
-    fun toDomain(command: CreateUserCommand): UserDomain {
-        return UserDomain(
+    fun toDomain(command: CreateUserCommand): User {
+        return User(
             firstName = command.firstName,
             lastName = command.lastName,
             username = command.username,

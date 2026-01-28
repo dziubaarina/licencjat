@@ -32,6 +32,7 @@ repositories {
 
 dependencies {
     implementation(project(":app:ports-output"))
+    implementation(project(":app:domain"))
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.liquibase:liquibase-core")
