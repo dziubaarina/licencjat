@@ -4,7 +4,7 @@ include(
     "app",
     "app:application",
     "app:ports-output",
-    "app:interfaces",
+    "app:entrypoint",
     "app:ports-input",
     "app:infrastructure",
     "app:commons"

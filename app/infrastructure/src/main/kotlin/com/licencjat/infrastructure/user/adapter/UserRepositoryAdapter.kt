@@ -5,6 +5,7 @@ import com.licencjat.infrastructure.user.mapper.UserEntityMapper
 import com.licencjat.infrastructure.user.repository.UserJpaRepository
 import com.licencjat.ports.output.user.UserRepository
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class UserRepositoryAdapter(
@@ -21,5 +22,10 @@ class UserRepositoryAdapter(
     override fun findAll(): List<User> {
         return userJpaRepository.findAll()
             .map { userEntityMapper.toDomain(it) }
+    }
+
+    override fun findById(id: Long): User? {
+        val entity = userJpaRepository.findById(id).getOrNull()
+        return entity?.let { userEntityMapper.toDomain(it) }
     }
 }

@@ -34,6 +34,7 @@ dependencies {
     implementation(project(":app:domain"))
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("io.swagger.core.v3:swagger-annotations:2.2.19")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
