@@ -1,4 +1,4 @@
-package com.licencjat.interfaces.user
+package com.licencjat.entrypoint.user
 
 import com.licencjat.ports.input.user.CreateUserCommand
 import com.licencjat.ports.input.user.UserService

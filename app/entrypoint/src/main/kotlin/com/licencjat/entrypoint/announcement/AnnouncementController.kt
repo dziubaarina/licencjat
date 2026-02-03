@@ -1,4 +1,4 @@
-package com.licencjat.interfaces.announcement
+package com.licencjat.entrypoint.announcement
 
 import com.licencjat.ports.input.announcement.AnnouncementService
 import com.licencjat.ports.input.announcement.dto.*
