@@ -4,9 +4,9 @@ import com.licencjat.domain.model.Announcement
 import com.licencjat.infrastructure.announcement.mapper.AnnouncementEntityMapper
 import com.licencjat.infrastructure.announcement.repository.AnnouncementJpaRepository
 import com.licencjat.ports.output.announcement.AnnouncementRepository
-import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Service
 
-@Repository
+@Service
 class AnnouncementRepositoryAdapter(
     private val repository: AnnouncementJpaRepository,
     private val mapper: AnnouncementEntityMapper
