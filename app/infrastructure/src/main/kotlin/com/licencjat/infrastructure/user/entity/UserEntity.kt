@@ -1,5 +1,6 @@
 package com.licencjat.infrastructure.user.entity
 
+import com.licencjat.domain.model.Role
 import jakarta.persistence.*
 
 @Entity
@@ -24,8 +25,9 @@ class UserEntity(
     @Column(nullable = false)
     val password: String,
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    val role: String,
+    val role: Role,
 
     @Column(name = "is_active", nullable = false)
     val isActive: Boolean

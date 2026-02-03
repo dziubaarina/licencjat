@@ -1,4 +1,4 @@
-package com.licencjat.ports.input.user.dto
+package com.licencjat.ports.input.user
 
 data class UserResponse(
     val id: Long?,
