@@ -7,6 +7,11 @@ data class User(
     val username: String,
     val email: String,
     val password: String,
-    val role: String,
+    val role: Role,
     val isActive: Boolean
-)
+) {
+    init {
+        require(email.contains("@")) { "Email musi zawierać znak '@'" }
+        require(firstName.isNotBlank()) { "Imię nie może być puste" }
+    }
+}
