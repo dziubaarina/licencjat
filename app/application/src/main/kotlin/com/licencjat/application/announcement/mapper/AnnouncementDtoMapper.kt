@@ -4,6 +4,7 @@ import com.licencjat.domain.model.Announcement
 import com.licencjat.ports.input.announcement.dto.AnnouncementResponse
 import com.licencjat.ports.input.announcement.dto.CreateAnnouncementCommand
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
 class AnnouncementDtoMapper {
@@ -24,9 +25,9 @@ class AnnouncementDtoMapper {
         return Announcement(
             title = command.title,
             description = command.description,
-            date = command.date,
-            type = command.type,
-            link = command.link,
+            date = LocalDateTime.now(),
+            type = "INFO",
+            link = null,
             authorId = command.authorId
         )
     }

@@ -4,11 +4,13 @@ import com.licencjat.application.announcement.mapper.AnnouncementDtoMapper
 import com.licencjat.ports.input.announcement.AnnouncementService
 import com.licencjat.ports.input.announcement.dto.*
 import com.licencjat.ports.output.announcement.AnnouncementRepository
+import com.licencjat.ports.output.user.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
 class AnnouncementApplicationService(
     private val repository: AnnouncementRepository,
+    private val userRepository: UserRepository,
     private val mapper: AnnouncementDtoMapper
 ) : AnnouncementService {
 
@@ -17,6 +19,12 @@ class AnnouncementApplicationService(
     }
 
     override fun createAnnouncement(command: CreateAnnouncementCommand): AnnouncementResponse {
+        val userExists = userRepository.findById(command.authorId)
+
+        if (userExists == null) {
+            throw IllegalArgumentException("Użytkownik o ID ${command.authorId} nie istnieje!")
+        }
+
         val domain = mapper.toDomain(command)
         val saved = repository.save(domain)
         return mapper.toDto(saved)
@@ -25,7 +33,6 @@ class AnnouncementApplicationService(
     override fun updateAnnouncement(command: UpdateAnnouncementCommand): AnnouncementResponse {
         val existing = repository.findById(command.id) ?: throw RuntimeException("Not found")
 
-        // Kopiujemy obiekt z nowymi danymi
         val updated = existing.copy(
             title = command.title,
             description = command.description,
