@@ -19,3 +19,9 @@ data class CreateSubmissionCommand(
     val dancerId: Long,
     val file: MultipartFile
 )
+
+data class GradeSubmissionCommand(
+    val submissionId: Long,
+    val score: Int,
+    val feedback: String?
+)
