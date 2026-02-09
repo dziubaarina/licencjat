@@ -2,6 +2,7 @@ package com.licencjat.interfaces.submission
 
 import com.licencjat.ports.input.submission.SubmissionService
 import com.licencjat.ports.input.submission.dto.CreateSubmissionCommand
+import com.licencjat.ports.input.submission.dto.GradeSubmissionCommand
 import com.licencjat.ports.input.submission.dto.SubmissionResponse
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -25,6 +26,16 @@ class SubmissionController(
             file = file
         )
         return submissionService.createSubmission(command)
+    }
+
+    @PutMapping("/{id}/grade")
+    fun gradeSubmission(
+        @PathVariable id: Long,
+        @RequestBody command: GradeSubmissionCommand
+    ): SubmissionResponse {
+        val safeCommand = command.copy(submissionId = id)
+
+        return submissionService.gradeSubmission(safeCommand)
     }
 
     @GetMapping("/task/{taskId}")
