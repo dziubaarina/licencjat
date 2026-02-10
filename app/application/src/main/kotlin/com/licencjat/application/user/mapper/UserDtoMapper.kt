@@ -1,9 +1,9 @@
 package com.licencjat.application.user.mapper
 
-import com.licencjat.domain.model.Role
 import com.licencjat.domain.model.User
-import com.licencjat.ports.input.user.CreateUserCommand
-import com.licencjat.ports.input.user.UserResponse
+import com.licencjat.domain.model.UserRole
+import com.licencjat.ports.input.user.dto.CreateUserCommand
+import com.licencjat.ports.input.user.dto.UserResponse
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,8 +14,8 @@ class UserDtoMapper {
             id = domain.id,
             firstName = domain.firstName,
             lastName = domain.lastName,
-            username = domain.username,
-            email = domain.email
+            email = domain.email,
+            role = domain.role.name
         )
     }
 
@@ -24,11 +24,10 @@ class UserDtoMapper {
             id = null,
             firstName = command.firstName,
             lastName = command.lastName,
-            username = command.username,
             email = command.email,
             password = command.password,
-            role = Role.USER,
-            isActive = true
+
+            role = UserRole.valueOf(command.role)
         )
     }
 }
