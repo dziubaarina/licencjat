@@ -9,5 +9,6 @@
     <include file="db/changelog/changes/002-create-announcements-table.xml"/>
     <include file="db/changelog/changes/003-create-tasks-table.xml"/>
     <include file="db/changelog/changes/004-create-submissions-table.xml"/>
+    <include file="db/changelog/changes/005-create-video-comments-table.xml"/>
 
 </databaseChangeLog>
