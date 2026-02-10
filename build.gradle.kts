@@ -20,11 +20,15 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springdoc:springdoc-openapi-starter-common:2.3.0")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("org.springdoc:springdoc-openapi-starter-common:2.8.5")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.liquibase:liquibase-core")
+    implementation(project(":app:ports-output"))
+    implementation(project(":app:ports-input"))
+    implementation(project(":app:domain"))
     implementation(project(":app:infrastructure"))
     implementation(project(":app:entrypoint"))
     implementation(project(":app:application"))
