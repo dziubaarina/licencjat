@@ -25,19 +25,18 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { it.disable() } 
+            .csrf { it.disable() }
             .cors { it.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/users/**").permitAll()
-                    .requestMatchers("/error").permitAll()
                     .requestMatchers(
                         "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html"
                     ).permitAll()
+
                     .anyRequest().authenticated()
             }
             .sessionManagement {
