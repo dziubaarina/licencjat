@@ -5,12 +5,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
-    <changeSet id="20240520-6" author="arina">
+    <changeSet id="006-cleanup-old-table" author="arina">
         <preConditions onFail="MARK_RAN">
-            <not>
-                <tableExists tableName="users"/>
-            </not>
+            <tableExists tableName="users"/>
         </preConditions>
+        <dropTable tableName="users" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet id="006-create-users-v2" author="arina">
         <createTable tableName="users">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
