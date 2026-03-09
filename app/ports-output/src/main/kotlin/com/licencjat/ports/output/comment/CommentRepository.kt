@@ -5,4 +5,5 @@ import com.licencjat.domain.model.VideoComment
 interface CommentRepository {
     fun save(comment: VideoComment): VideoComment
     fun findAllBySubmissionId(submissionId: Long): List<VideoComment>
+    fun deleteById(id: Long)
 }

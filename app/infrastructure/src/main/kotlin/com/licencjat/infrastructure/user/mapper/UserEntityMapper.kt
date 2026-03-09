@@ -15,8 +15,8 @@ class UserEntityMapper {
             password = entity.password,
             firstName = entity.firstName,
             lastName = entity.lastName,
-
-            role = UserRole.valueOf(entity.role)
+            role = UserRole.valueOf(entity.role),
+            isActive = entity.isActive
         )
     }
 
@@ -27,8 +27,8 @@ class UserEntityMapper {
             password = domain.password,
             firstName = domain.firstName,
             lastName = domain.lastName,
-
-            role = domain.role.name
+            role = domain.role.name,
+            isActive = domain.isActive
         )
     }
 }

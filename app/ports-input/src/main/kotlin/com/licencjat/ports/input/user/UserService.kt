@@ -6,4 +6,5 @@ import com.licencjat.ports.input.user.dto.UserResponse
 interface UserService {
     fun getAllUsers(): List<UserResponse>
     fun createUser(command: CreateUserCommand): UserResponse
+    fun setUserStatus(userId: Long, active: Boolean)
 }

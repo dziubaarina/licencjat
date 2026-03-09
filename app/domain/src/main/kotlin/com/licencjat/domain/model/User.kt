@@ -6,7 +6,8 @@ data class User(
     val password: String,
     val firstName: String,
     val lastName: String,
-    val role: UserRole
+    val role: UserRole,
+    val isActive: Boolean = true
 ) {
     init {
         require(email.contains("@")) { "Email musi zawierać znak '@'" }
@@ -16,5 +17,6 @@ data class User(
 
 enum class UserRole {
     CHOREOGRAPHER,
-    DANCER
+    DANCER,
+    ADMIN
 }
