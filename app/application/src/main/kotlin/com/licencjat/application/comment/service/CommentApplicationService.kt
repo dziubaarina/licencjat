@@ -1,5 +1,6 @@
 package com.licencjat.application.comment.service
 
+import com.licencjat.application.comment.mapper.CommentDtoMapper
 import com.licencjat.domain.model.VideoComment
 import com.licencjat.ports.input.comment.CommentService
 import com.licencjat.ports.input.comment.dto.AddCommentCommand
@@ -10,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CommentApplicationService(
-    private val repository: CommentRepository
+    private val repository: CommentRepository,
+    private val mapper: CommentDtoMapper
 ) : CommentService {
 
     @Transactional
@@ -18,30 +20,19 @@ class CommentApplicationService(
         val domain = VideoComment(
             submissionId = command.submissionId,
             authorId = command.authorId,
-            timestampSeconds = command.timestampSeconds,
-            content = command.content
+            content = command.content,
+            timestampSeconds = command.timestampSeconds
         )
         val saved = repository.save(domain)
-        return toResponse(saved)
+        return mapper.toDto(saved)
     }
 
     override fun getCommentsForSubmission(submissionId: Long): List<CommentResponse> {
-        return repository.findAllBySubmissionId(submissionId).map { toResponse(it) }
+        return repository.findAllBySubmissionId(submissionId).map { mapper.toDto(it) }
     }
 
-    //format MM:SS
-    private fun toResponse(domain: VideoComment): CommentResponse {
-        val minutes = domain.timestampSeconds / 60
-        val seconds = domain.timestampSeconds % 60
-        val formatted = String.format("%02d:%02d", minutes, seconds)
-
-        return CommentResponse(
-            id = domain.id,
-            authorId = domain.authorId,
-            timestampSeconds = domain.timestampSeconds,
-            formattedTime = formatted, // Tu wysyłamy np. "01:05"
-            content = domain.content,
-            createdAt = domain.createdAt
-        )
+    @Transactional
+    override fun deleteComment(id: Long) {
+        repository.deleteById(id)
     }
 }

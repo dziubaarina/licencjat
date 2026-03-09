@@ -9,4 +9,6 @@ interface SubmissionService {
     fun gradeSubmission(command: GradeSubmissionCommand): SubmissionResponse
     fun getSubmissionsForTask(taskId: Long): List<SubmissionResponse>
     fun getSubmissionsForDancer(dancerId: Long): List<SubmissionResponse>
+    fun deleteSubmission(id: Long)
+    fun getTotalSubmissionsCount(): Long
 }

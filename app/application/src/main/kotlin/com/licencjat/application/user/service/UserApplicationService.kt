@@ -25,4 +25,11 @@ class UserApplicationService(
         val savedUser = userRepository.save(domainUser)
         return userDtoMapper.toDto(savedUser)
     }
+
+    @Transactional
+    override fun setUserStatus(userId: Long, active: Boolean) {
+        val user = userRepository.findById(userId) ?: throw RuntimeException("User not found")
+        val updatedUser = user.copy(isActive = active)
+        userRepository.save(updatedUser)
+    }
 }

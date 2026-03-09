@@ -5,6 +5,7 @@ import com.licencjat.ports.input.submission.dto.CreateSubmissionCommand
 import com.licencjat.ports.input.submission.dto.GradeSubmissionCommand
 import com.licencjat.ports.input.submission.dto.SubmissionResponse
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
@@ -14,6 +15,7 @@ class SubmissionController(
     private val submissionService: SubmissionService
 ) {
 
+    @PreAuthorize("hasAuthority('DANCER')")
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createSubmission(
         @RequestParam("taskId") taskId: Long,
@@ -28,14 +30,20 @@ class SubmissionController(
         return submissionService.createSubmission(command)
     }
 
+    @PreAuthorize("hasAuthority('CHOREOGRAPHER')")
     @PutMapping("/{id}/grade")
     fun gradeSubmission(
         @PathVariable id: Long,
         @RequestBody command: GradeSubmissionCommand
     ): SubmissionResponse {
         val safeCommand = command.copy(submissionId = id)
-
         return submissionService.gradeSubmission(safeCommand)
+    }
+
+    @PreAuthorize("hasAnyAuthority('CHOREOGRAPHER', 'ADMIN')")
+    @DeleteMapping("/{id}")
+    fun deleteSubmission(@PathVariable id: Long) {
+        submissionService.deleteSubmission(id)
     }
 
     @GetMapping("/task/{taskId}")

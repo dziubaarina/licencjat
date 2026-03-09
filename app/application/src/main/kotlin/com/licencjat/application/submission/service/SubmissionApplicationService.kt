@@ -57,4 +57,13 @@ class SubmissionApplicationService(
     override fun getSubmissionsForDancer(dancerId: Long): List<SubmissionResponse> {
         return repository.findAllByDancerId(dancerId).map { mapper.toDto(it) }
     }
+
+    @Transactional
+    override fun deleteSubmission(id: Long) {
+        repository.deleteById(id)
+    }
+
+    override fun getTotalSubmissionsCount(): Long {
+        return repository.count()
+    }
 }

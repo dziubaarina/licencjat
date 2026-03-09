@@ -7,4 +7,6 @@ interface SubmissionRepository {
     fun findById(id: Long): Submission?
     fun findAllByTaskId(taskId: Long): List<Submission>
     fun findAllByDancerId(dancerId: Long): List<Submission>
+    fun deleteById(id: Long)
+    fun count(): Long
 }

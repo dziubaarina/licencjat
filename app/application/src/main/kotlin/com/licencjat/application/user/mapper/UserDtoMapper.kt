@@ -15,7 +15,8 @@ class UserDtoMapper {
             firstName = domain.firstName,
             lastName = domain.lastName,
             email = domain.email,
-            role = domain.role.name
+            role = domain.role.name,
+            isActive = domain.isActive
         )
     }
 
@@ -26,8 +27,8 @@ class UserDtoMapper {
             lastName = command.lastName,
             email = command.email,
             password = command.password,
-
-            role = UserRole.valueOf(command.role)
+            role = UserRole.valueOf(command.role),
+            isActive = true
         )
     }
 }

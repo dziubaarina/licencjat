@@ -29,4 +29,12 @@ class SubmissionRepositoryAdapter(
     override fun findAllByDancerId(dancerId: Long): List<Submission> {
         return repository.findAllByDancerId(dancerId).map { mapper.toDomain(it) }
     }
+
+    override fun deleteById(id: Long) {
+        repository.deleteById(id)
+    }
+
+    override fun count(): Long {
+        return repository.count()
+    }
 }

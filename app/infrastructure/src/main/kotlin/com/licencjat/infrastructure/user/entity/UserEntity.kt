@@ -22,5 +22,8 @@ class UserEntity(
     val lastName: String,
 
     @Column(nullable = false)
-    val role: String
+    val role: String,
+
+    @Column(name = "is_active", nullable = false)
+    val isActive: Boolean = true
 )

@@ -15,9 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 class SecurityConfig(
     private val userDetailsService: UserDetailsService
 ) {

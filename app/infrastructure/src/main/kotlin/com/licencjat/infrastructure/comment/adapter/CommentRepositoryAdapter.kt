@@ -1,39 +1,29 @@
 package com.licencjat.infrastructure.comment.adapter
 
 import com.licencjat.domain.model.VideoComment
-import com.licencjat.infrastructure.comment.entity.CommentEntity
+import com.licencjat.infrastructure.comment.mapper.CommentEntityMapper
 import com.licencjat.infrastructure.comment.repository.CommentJpaRepository
 import com.licencjat.ports.output.comment.CommentRepository
 import org.springframework.stereotype.Component
 
 @Component
 class CommentRepositoryAdapter(
-    private val jpaRepository: CommentJpaRepository
+    private val jpaRepository: CommentJpaRepository,
+    private val mapper: CommentEntityMapper
 ) : CommentRepository {
 
     override fun save(comment: VideoComment): VideoComment {
-        val entity = CommentEntity(
-            id = comment.id,
-            submissionId = comment.submissionId,
-            authorId = comment.authorId,
-            timestampSeconds = comment.timestampSeconds,
-            content = comment.content,
-            createdAt = comment.createdAt
-        )
-        val saved = jpaRepository.save(entity)
-        return comment.copy(id = saved.id)
+        val entity = mapper.toEntity(comment)
+        val savedEntity = jpaRepository.save(entity)
+        return mapper.toDomain(savedEntity)
     }
 
     override fun findAllBySubmissionId(submissionId: Long): List<VideoComment> {
-        return jpaRepository.findAllBySubmissionIdOrderByTimestampSecondsAsc(submissionId).map {
-            VideoComment(
-                id = it.id,
-                submissionId = it.submissionId,
-                authorId = it.authorId,
-                timestampSeconds = it.timestampSeconds,
-                content = it.content,
-                createdAt = it.createdAt
-            )
-        }
+        return jpaRepository.findAllBySubmissionId(submissionId)
+            .map { mapper.toDomain(it) }
+    }
+
+    override fun deleteById(id: Long) {
+        jpaRepository.deleteById(id)
     }
 }
