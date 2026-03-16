@@ -31,14 +31,19 @@ class SecurityConfig(
             .cors { it.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { auth ->
                 auth
-                    .requestMatchers("/auth/**").permitAll()
+                    // DODANE: /submissions i /submissions/** na liście otwartych!
+                    .requestMatchers(
+                        "/auth/**",
+                        "/tasks", "/tasks/**",
+                        "/uploads/**",
+                        "/submissions", "/submissions/**"
+                    ).permitAll()
                     .requestMatchers(
                         "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html"
                     ).permitAll()
-
                     .anyRequest().authenticated()
             }
             .sessionManagement {
