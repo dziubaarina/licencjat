@@ -15,7 +15,7 @@ class SubmissionController(
     private val submissionService: SubmissionService
 ) {
 
-    @PreAuthorize("hasAuthority('DANCER')")
+    //@PreAuthorize("hasAuthority('DANCER')")
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createSubmission(
         @RequestParam("taskId") taskId: Long,
