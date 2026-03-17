@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="008-insert-test-users" author="test">
+
+        <!-- hasło: tancerz123 -->
+        <insert tableName="users">
+            <column name="email" value="tancerz@danceapp.pl"/>
+            <column name="password" value="$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"/>
+            <column name="first_name" value="Jan"/>
+            <column name="last_name" value="Tancerz"/>
+            <column name="role" value="DANCER"/>
+            <column name="is_active" value="true"/>
+        </insert>
+
+        <!-- hasło: trener123 -->
+        <insert tableName="users">
+            <column name="email" value="trener@danceapp.pl"/>
+            <column name="password" value="$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy"/>
+            <column name="first_name" value="Anna"/>
+            <column name="last_name" value="Trener"/>
+            <column name="role" value="CHOREOGRAPHER"/>
+            <column name="is_active" value="true"/>
+        </insert>
+
+        <!-- hasło: admin123 -->
+        <insert tableName="users">
+            <column name="email" value="admin@danceapp.pl"/>
+            <column name="password" value="$2a$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B9.KZbO"/>
+            <column name="first_name" value="Admin"/>
+            <column name="last_name" value="Systemu"/>
+            <column name="role" value="ADMIN"/>
+            <column name="is_active" value="true"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

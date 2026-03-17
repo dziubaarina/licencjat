@@ -25,7 +25,12 @@ class UserRepositoryAdapter(
     }
 
     override fun findById(id: Long): User? {
-        val entity = userJpaRepository.findById(id).getOrNull()
-        return entity?.let { userEntityMapper.toDomain(it) }
+        return userJpaRepository.findById(id).getOrNull()
+            ?.let { userEntityMapper.toDomain(it) }
+    }
+
+    override fun findByEmail(email: String): User? {  // DODANE
+        return userJpaRepository.findByEmail(email)
+            ?.let { userEntityMapper.toDomain(it) }
     }
 }

@@ -19,7 +19,7 @@ class UserDetailsServiceImpl(
         return User.builder()
             .username(userEntity.email)
             .password(userEntity.password)
-            .roles(userEntity.role)
+            .authorities(userEntity.role)  // używamy authorities zamiast roles - bez ROLE_ prefix
             .build()
     }
 }
