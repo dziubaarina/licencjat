@@ -16,19 +16,20 @@ class AnnouncementController(
         return service.getAllAnnouncements()
     }
 
-    @PreAuthorize("hasAuthority('CHOREOGRAPHER', 'ADMIN')")
+    // NAPRAWIONO: hasAuthority() przyjmuje tylko 1 argument — użyj hasAnyAuthority()
+    @PreAuthorize("hasAnyAuthority('CHOREOGRAPHER', 'ADMIN')")
     @PostMapping
     fun create(@RequestBody command: CreateAnnouncementCommand): AnnouncementResponse {
         return service.createAnnouncement(command)
     }
 
-    @PreAuthorize("hasAuthority('CHOREOGRAPHER')")
+    @PreAuthorize("hasAnyAuthority('CHOREOGRAPHER', 'ADMIN')")
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody command: UpdateAnnouncementCommand): AnnouncementResponse {
         return service.updateAnnouncement(command.copy(id = id))
     }
 
-    @PreAuthorize("hasAuthority('CHOREOGRAPHER')")
+    @PreAuthorize("hasAnyAuthority('CHOREOGRAPHER', 'ADMIN')")
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long) {
         service.deleteAnnouncement(id)

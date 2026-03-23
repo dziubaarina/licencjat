@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":app:ports-output"))
     implementation(project(":app:domain"))
     implementation(project(":app:entrypoint")) // TU SĄ KONTROLERY - KLUCZOWE!
+    implementation(project(":app:application")) // DODANO: potrzebne dla JwtAuthFilter -> JwtService
 
     // === SPRING BOOT ===
     implementation("org.springframework.boot:spring-boot-starter")
