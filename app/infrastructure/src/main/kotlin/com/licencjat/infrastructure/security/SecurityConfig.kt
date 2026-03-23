@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
@@ -21,7 +22,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 @EnableMethodSecurity
 class SecurityConfig(
-    private val userDetailsService: UserDetailsService
+    private val userDetailsService: UserDetailsService,
+    private val jwtAuthFilter: JwtAuthFilter
 ) {
 
     @Bean
@@ -31,12 +33,29 @@ class SecurityConfig(
             .cors { it.configurationSource(corsConfigurationSource()) }
             .authorizeHttpRequests { auth ->
                 auth
-                    .anyRequest().permitAll()  // TYMCZASOWO wszystko otwarte na czas developmentu
+                    // Publiczne endpointy — logowanie i rejestracja
+                    .requestMatchers("/auth/login").permitAll()
+                    .requestMatchers("/users").permitAll()          // POST rejestracja
+                    // Swagger — dostęp dla dev
+                    .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                    ).permitAll()
+                    // Pliki statyczne (wideo) — muszą być publiczne dla odtwarzacza
+                    .requestMatchers("/uploads/**").permitAll()
+                    // Endpointy GET które nie wymagają auth (zadania dla tancerzy)
+                    .requestMatchers("/tasks").permitAll()
+                    .requestMatchers("/tasks/**").permitAll()
+                    // Wszystko inne wymaga JWT
+                    .anyRequest().authenticated()
             }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .authenticationProvider(authenticationProvider())
+            // Rejestracja filtra JWT — KLUCZOWE dla działania @PreAuthorize
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }
@@ -44,9 +63,11 @@ class SecurityConfig(
     @Bean
     fun corsConfigurationSource(): UrlBasedCorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("*")
+        // Tylko frontend — nie wildcard
+        configuration.allowedOrigins = listOf("http://localhost:3000", "http://localhost:8088")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
         configuration.allowedHeaders = listOf("*")
+        configuration.allowCredentials = true
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)
         return source

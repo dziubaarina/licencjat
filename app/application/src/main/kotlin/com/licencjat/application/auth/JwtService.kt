@@ -5,17 +5,19 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.Date
-import java.util.HashMap
 import java.util.function.Function
 import javax.crypto.SecretKey
 
 @Service
 class JwtService {
 
-    private val SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
+    // Sekret czytany z application.properties — nigdy nie hardkodowany w kodzie
+    @Value("\${jwt.secret}")
+    private lateinit var secretKey: String
 
     fun extractUsername(token: String): String {
         return extractClaim(token, Claims::getSubject)
@@ -27,7 +29,7 @@ class JwtService {
     }
 
     fun generateToken(userDetails: UserDetails): String {
-        return generateToken(HashMap(), userDetails)
+        return generateToken(emptyMap(), userDetails)
     }
 
     fun generateToken(extraClaims: Map<String, Any>, userDetails: UserDetails): String {
@@ -35,14 +37,14 @@ class JwtService {
             .setClaims(extraClaims)
             .setSubject(userDetails.username)
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+            .setExpiration(Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
             .signWith(getSignInKey(), SignatureAlgorithm.HS256)
             .compact()
     }
 
     fun isTokenValid(token: String, userDetails: UserDetails): Boolean {
         val username = extractUsername(token)
-        return (username == userDetails.username && !isTokenExpired(token))
+        return username == userDetails.username && !isTokenExpired(token)
     }
 
     private fun isTokenExpired(token: String): Boolean {
@@ -62,7 +64,7 @@ class JwtService {
     }
 
     private fun getSignInKey(): SecretKey {
-        val keyBytes = Decoders.BASE64.decode(SECRET_KEY)
+        val keyBytes = Decoders.BASE64.decode(secretKey)
         return Keys.hmacShaKeyFor(keyBytes)
     }
 }

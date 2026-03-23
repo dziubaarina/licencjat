@@ -4,10 +4,13 @@ import com.licencjat.domain.model.User
 import com.licencjat.domain.model.UserRole
 import com.licencjat.ports.input.user.dto.CreateUserCommand
 import com.licencjat.ports.input.user.dto.UserResponse
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 
 @Component
-class UserDtoMapper {
+class UserDtoMapper(
+    private val passwordEncoder: PasswordEncoder
+) {
 
     fun toDto(domain: User): UserResponse {
         return UserResponse(
@@ -26,7 +29,8 @@ class UserDtoMapper {
             firstName = command.firstName,
             lastName = command.lastName,
             email = command.email,
-            password = command.password,
+            // Hasło zawsze hashowane BCrypt — nigdy plaintext
+            password = passwordEncoder.encode(command.password),
             role = UserRole.valueOf(command.role),
             isActive = true
         )
